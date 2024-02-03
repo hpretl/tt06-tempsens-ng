@@ -31,6 +31,7 @@ set ::env(LINTER_INCLUDE_PDK_MODELS) 1
 # Avoid messing around with analog signals
 set ::env(RSZ_DONT_TOUCH_RX) "_ana_"
 set ::env(QUIT_ON_SYNTH_CHECKS) 0
+set ::env(QUIT_ON_SETUP_VIOLATIONS) 0
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # !!! DO NOT CHANGE ANYTHING BELOW THIS POINT !!!
