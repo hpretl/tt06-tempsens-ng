@@ -13,8 +13,8 @@ There will be a better explanation in the future.
 
 ## How to test
 
-Simply turn it on, and see the result.
+Simply turn it on, and see the result. IO usage documented in the info.yml.
 
 ## External hardware
 
-None needed.
+Requires a logic analyzer or similar to inspect digital outputs.
