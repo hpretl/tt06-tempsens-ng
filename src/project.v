@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Your Name
+ * Copyright (c) 2024 Harald Pretl, IIC@JKU
  * SPDX-License-Identifier: Apache-2.0
  */
 
