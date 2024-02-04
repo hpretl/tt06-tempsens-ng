@@ -30,6 +30,7 @@ module tempsens (
 	input wire 					clk,
 	input wire [N_VDAC-1:0] 	i_dac_code,
 	input wire [3:0] 			i_dbg_sel,
+	input wire [1:0]			i_dbg_ts,
 	// main outputs
 	output wire [N_TEMP-1:0]	o_res,
 	output wire [3:0] 			o_dbg
@@ -50,6 +51,7 @@ module tempsens (
 		.clk(clk),
 		.i_dac_code(i_dac_code),
 		.i_dbg_sel(i_dbg_sel),
+		.i_dbg_ts(i_dbg_ts),
 		.o_res(o_res),
 		.o_dbg(o_dbg),
 		.i_ts_tempdelay(ts_tempdelay),

@@ -56,6 +56,7 @@ module tt_um_hpretl_tt06_tempsens (
 		.clk(clk),
 		.i_dac_code(dac_code),
     .i_dbg_sel(uio_in[3:0]),
+    .i_dbg_ts(out_sel),
 		.o_res(out_wide),
 		.o_dbg(uio_out[7:4])
 	);

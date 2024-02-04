@@ -23,6 +23,7 @@ module tempsens_ctrl #( parameter N_TEMP=20, N_VDAC=6 )(
 	input wire clk,
 	input wire [N_VDAC-1:0] i_dac_code,
 	input wire [3:0] i_dbg_sel,
+	input wire [1:0] i_dbg_ts,
 	// main outputs
 	output wire [N_TEMP-1:0] o_res,
 	output wire [3:0] o_dbg,
@@ -87,22 +88,27 @@ module tempsens_ctrl #( parameter N_TEMP=20, N_VDAC=6 )(
 	wire in_transition = in_transition_ph1 || in_transition_ph2;
 	wire in_measurement = (state == ST_MEASURE);
 	wire is_done = (state == ST_DONE);
+	wire in_debug = (i_dbg_sel == 4'd15);
 
 	// signals going in and out of temperature-dependent delay line
     wire tempsens_en, tempsens_measure;
 	wire [N_VDAC-1:0] tempsens_dat;
 
-	// create temperature sensor input signal based on state signals, gate output to
-	assign tempsens_en = (in_precharge || in_transition || in_measurement) ? 1'b1 : 1'b0;
-	assign tempsens_dat =		in_precharge		? VMAX :
+	// create temperature sensor input signal based on state signals
+	// debug mode 15 allows direct control of tempsensor core from outside
+	assign tempsens_en = 		in_debug ? i_dbg_ts[0] :
+								(in_precharge || in_transition || in_measurement) ? 1'b1 : 1'b0;
+	
+	assign tempsens_dat =		in_debug 			? i_dac_code :
+								in_precharge		? VMAX :
 								in_transition		? VMIN :
-								in_measurement		? i_dac_code :
-								VMAX;
-	assign tempsens_measure = 	in_precharge		? 1'b0 :
+								in_measurement		? i_dac_code : VMAX;
+
+	assign tempsens_measure =	in_debug 			? i_dbg_ts[1] :
+								in_precharge		? 1'b0 :
 								in_transition_ph1	? 1'b0 :
 								in_transition_ph2	? 1'b1 :
-								in_measurement 		? 1'b1 :
-								1'b0;
+								in_measurement 		? 1'b1 : 1'b0;
 
 
 	// debug vectors
@@ -123,8 +129,7 @@ module tempsens_ctrl #( parameter N_TEMP=20, N_VDAC=6 )(
 			4'd12: dbg = tempsens_final[11:08];
 			4'd13: dbg = tempsens_final[15:12];
 			4'd14: dbg = tempsens_final[19:16];
-			default:
-				  dbg = 4'b1010;
+			4'd15: dbg = {1'b0,o_ts_en,o_ts_prechrgn,i_ts_tempdelay};
 		endcase
 	end
 

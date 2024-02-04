@@ -27,8 +27,14 @@
 `define __TEMPSENS_VDAC_CELL__
 
 `default_nettype none
+/* verilator lint_off INCABSPATH */
+/* verilator lint_off UNUSEDSIGNAL */
+/* verilator lint_off DECLFILENAME */
 //`include "/foss/pdks/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v"
 //`include "/foss/pdks/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v"
+/* verilator lint_on INCABSPATH */
+/* verilator lint_on UNUSEDSIGNAL */
+/* verilator lint_on DECLFILENAME */
 
 module tempsens_vdac_cell #(parameter PARALLEL_CELLS = 4) (
 	input wire	i_sign,
